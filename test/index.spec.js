@@ -1,6 +1,7 @@
 import path from 'path'
 import { expect } from 'chai'
 import transformCode from './transformCode'
+import transformCodeWithKeepImport from './transformCodeWithKeepImport'
 import rimraf from 'rimraf'
 import fs from 'fs'
 
@@ -207,10 +208,10 @@ describe('index', function () {
     )
   })
 
-  it('should replace require statements even without assignment', function () {
+  it('should not replace require statements when replaceRequireStatementIntoString is false', function () {
     const result = transformCode(getFixtures('require-no-var.js'), {}).code
     expect(result).to.equal(
-      `'/public/64eababb117f90535085779cc0325003.svg';`
+      `require('../assets/file.svg');\n() => require('../assets/file.svg');`
     )
   })
 
@@ -275,5 +276,13 @@ describe('index', function () {
     expect(
       fs.existsSync(path.resolve(__dirname, './public/test/assets/file.png'))
     ).to.equal(true)
+  })
+
+  it('keeps require statement when keepImport option is truthy', function () {
+    const result = transformCodeWithKeepImport(getFixtures('require-multiple.js'), {
+      name: '[path][name].[ext]'
+    }).code
+    const expectedResult = fs.readFileSync(getFixtures(path.join('snapshots', 'require-multiple.js'))).toString();
+    expect(expectedResult.includes(result)).to.equal(true);
   })
 })
