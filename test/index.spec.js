@@ -2,6 +2,7 @@ import path from 'path'
 import { expect } from 'chai'
 import transformCode from './transformCode'
 import transformCodeWithKeepImport from './transformCodeWithKeepImport'
+import transformCodeWithoutEmittingFiles from './transformCodeWithoutEmittingFiles'
 import rimraf from 'rimraf'
 import fs from 'fs'
 
@@ -245,6 +246,15 @@ describe('index', function () {
       )
     ).to.equal(true)
   })
+
+  it('should not output file when emitFiles option is false', function () {
+    const result = transformCodeWithoutEmittingFiles(getFixtures('import-image.js')).code
+    expect(
+      fs.existsSync(
+        path.resolve(__dirname, './public/9c87cbf3ba33126ffd25ae7f2f6bbafb.png')
+      )
+    ).to.equal(false)
+  });
 
   it('outputs file in outputPath, nested', function () {
     const result = transformCode(getFixtures('import-image.js'), {

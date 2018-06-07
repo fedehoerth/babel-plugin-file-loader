@@ -73,6 +73,7 @@ export default (rootPath, filePath, opts) => {
   let publicPath = opts.publicPath.replace(/\/$/, '')
   let context = opts.context[0] == '/' ? opts.context.substr(1) : opts.context
   let contextPath = path.resolve(rootPath, context)
+  let emitFiles = !!opts.emitFiles
 
   if (!fs.existsSync(filePath)) {
     throw new Error('File does not exist')
@@ -108,7 +109,9 @@ export default (rootPath, filePath, opts) => {
       hash(filePath, hashType, digestType, parseInt(maxLength, 10))
   )
 
-  fs.copySync(filePath, path.join(rootPath, outputPath, url.split('?')[0]))
+  if (emitFiles) {
+    fs.copySync(filePath, path.join(rootPath, outputPath, url.split('?')[0]))
+  }
 
   return publicPath + '/' + url
 }

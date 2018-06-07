@@ -10,6 +10,7 @@ export const defaultOptions = {
   context: '',
   extensions: ['gif', 'jpeg', 'jpg', 'png', 'svg'],
   keepImport: false,
+  emitFiles: true,
 }
 
 const getVariableName = p => {
