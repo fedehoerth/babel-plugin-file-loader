@@ -1,5 +1,5 @@
 {
-  "name": "babel-plugin-file-loader",
+  "name": "@fhoerth/babel-plugin-file-loader",
   "version": "2.0.3",
   "description": "Like file-loader for webpack, but for Babel. Works with SSE apps.",
   "main": "lib/index.js",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sheerun/babel-plugin-file-loader.git"
+    "url": "git+https://github.com/fedehoerth/babel-plugin-file-loader.git"
   },
   "keywords": [
     "nextjs",
